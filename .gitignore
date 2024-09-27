@@ -1,0 +1,17 @@
+venv/
+Pipfile.lock
+
+# Other env
+.env
+
+#cache
+.cache*
+__pycache__/
+storage/
+dataset/
+minio/
+
+mysql/
+postgresql/
+
+brazilian-ecommerce/

@@ -1,0 +1,46 @@
+version : "3.0"
+services:
+  #mysql
+  mysql:
+    image: "mysql:8.0"
+    container_name: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+    networks:
+      - de_network
+    restart: always
+  minio:
+    image: "minio/minio"
+    container_name: minio
+    hostname: minio
+    command: [ "server", "/data", "--console-address", ":9001" ]
+    env_file:
+      - .env
+    ports:
+      - "9001:9001"
+      - "9000:9000"
+    volumes:
+      - ./minio:/data
+    networks:
+        - de_network
+    #postgresql
+  de_psql:
+      image: "postgres:15"
+      container_name: de_psql
+      volumes:
+        - ./postgresql:/var/lib/postgresql/data
+      ports:
+        - "5432:5432"
+      env_file:
+        - .env
+      networks:
+        - de_network  
+
+networks:
+  de_network:
+    driver: bridge
+    name: de_network
